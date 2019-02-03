@@ -9,6 +9,7 @@ import {AppMenu} from './components/common/AppMenu';
 import {AppInlineProfile} from './components/common/AppInlineProfile';
 import Patient from './components/patient';
 import Dashboard from './components/dashboard';
+import Login from './components/login';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -124,6 +125,7 @@ class App extends Component {
         <div className="layout-main">
           <Route path="/" exact component={Dashboard} />
           <Route path="/patient" component={Patient} />
+          <Route path="/login" component={Login} />
         </div>
         <AppFooter />
         <div className="layout-mask"></div>

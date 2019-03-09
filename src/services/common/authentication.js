@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 import {UserManager} from 'oidc-client';
 
-class Login extends Component {
+class Authentication extends Component {
     constructor(props) {
         super(props);
         this.state = {
             result: ''
         };
     }
+    Login = () => {
+        console.log('Login');
+    };
     log = (msg, arg) => {        
         document.getElementById('results').innerText = '';
         Array.prototype.forEach.call(arg, (msg) => {
@@ -59,5 +62,49 @@ class Login extends Component {
         </div>);
     }
 }
-export default Login;
+export default Authentication;
 
+ */
+
+
+import {UserManager} from 'oidc-client';
+
+const access_token = 'access_token';
+const getOidcUserManager = () => {
+    const config = {
+        authority: "http://localhost:51000",
+        client_id: "reactClient",
+        redirect_uri: "http://localhost:3000/login-return",
+        response_type: "id_token token",
+        scope: "openid profile clinicApi",
+        post_logout_redirect_uri: "http://localhost:3000/patient",
+    };
+    return new UserManager(config);
+}
+const authenticate = () => {
+    getOidcUserManager().signinRedirect();
+};
+const isAuthenticated = () =>{
+    return localStorage.getItem(access_token) 
+        ? true
+        : false;
+};
+const saveAccessToken = (accessToken) => {
+    localStorage.setItem(access_token, accessToken);
+};
+const getAccessToken = () => {
+    return localStorage.getItem(access_token);
+};
+const logout = () => {
+    localStorage.removeItem(access_token);
+    localStorage.clear();
+    getOidcUserManager().signoutRedirect();
+    console.log('Logout');
+};
+export default {
+    authenticate, 
+    logout, 
+    isAuthenticated, 
+    getAccessToken, 
+    saveAccessToken
+};

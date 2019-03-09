@@ -1,9 +1,12 @@
 import axios from "./common/axiosWrapper";
 
-const baseApiUrl = 'http://localhost:51981/api';
+const baseApiUrl = 'http://localhost:51001/api';
 const save = (patient) => {
     return axios.post(`${baseApiUrl}/Patient`, patient);
-}
+};
+const get = () => {    
+    return axios.get(`${baseApiUrl}/Patient`);
+};
 export default {
-    save
+    save, get
 };

@@ -7,8 +7,11 @@ import {getMenuItem} from './components/common/MenuItem';
 import {ScrollPanel} from 'primereact/components/scrollpanel/ScrollPanel';
 import {AppMenu} from './components/common/AppMenu';
 import {AppInlineProfile} from './components/common/AppInlineProfile';
+import PrivateRoute from './components/common/PrivateRoute';
 import Patient from './components/patient';
 import Dashboard from './components/dashboard';
+import Login from './components/common/Login';
+import LoginReturn from './components/common/LoginReturn';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -122,8 +125,10 @@ class App extends Component {
           </ScrollPanel>
         </div> 
         <div className="layout-main">
-          <Route path="/" exact component={Dashboard} />
-          <Route path="/patient" component={Patient} />
+          <PrivateRoute path="/" exact component={Dashboard} />
+          <PrivateRoute path="/patient" component={Patient} />
+          <Route path="/login" component={Login} />
+          <Route path="/login-return" component={LoginReturn} />
         </div>
         <AppFooter />
         <div className="layout-mask"></div>

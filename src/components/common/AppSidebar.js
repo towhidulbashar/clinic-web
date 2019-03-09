@@ -23,6 +23,7 @@ export class AppSidebar extends Component {
     createMenu() {
         this.menu = [
             {label: 'Dashboard', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/'}},
+            {label: 'Login(temporary)', icon: 'pi pi-fw pi-home', command: () => {window.location = '#/login'}},
             {
                 label: 'Menu Modes', icon: 'pi pi-fw pi-cog',
                 items: [

@@ -24,6 +24,11 @@ class Patient extends Component {
             .then(()=> alert('Patient saved'))
             .catch(error => console.error('Patient save failed. ', error));
     };
+    componentDidMount(){
+        patientService.get()
+        .then(res => console.log(res))
+        .catch(e => console.log('get: ', e));
+    }
     render() {
         return (<form className="p-grid" onSubmit={this.handleSubmit}>  
             <div className="p-lg-offset-1 p-col-12 p-lg-10">
@@ -101,7 +106,7 @@ class Patient extends Component {
                         placeholder="Prescription"
                         autoResize={true}/>
                 </div>
-                <div className="card card-w-title">
+                <div className="card card-w-title" style={{display: 'flex', flexDirection: 'row'}}>
                     <Button label="Save" />
                     <Button label="Clear" 
                         onClick={() => {this.setState({

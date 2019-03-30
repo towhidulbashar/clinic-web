@@ -1,4 +1,4 @@
-import axios from "./common/axiosWrapper";
+import axios from "../../services/common/axiosWrapper";
 
 const baseApiUrl = 'http://localhost:51001/api';
 const save = (patient) => {

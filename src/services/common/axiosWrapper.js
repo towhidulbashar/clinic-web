@@ -4,7 +4,7 @@ import authentication from "./authentication";
 axios.interceptors.request.use(
     config => {
       if (!config.headers.Authorization) { 
-        if (authentication.isAuthenticated()) {
+        if (authentication.isAuthenticate()) {
           config.headers.Authorization = `Bearer ${authentication.getAccessToken()}`;
         }
       }  

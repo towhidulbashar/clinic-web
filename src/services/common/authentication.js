@@ -66,45 +66,62 @@ export default Authentication;
 
  */
 
+import Oidc, {User} from 'oidc-client';
 
-import {UserManager} from 'oidc-client';
+const config = {
+    authority: "http://localhost:51000",
+    client_id: "reactClient",
+    redirect_uri: "http://localhost:3000/login-return",
+    response_type: "id_token token",
+    scope: "openid profile clinicApi",
+    post_logout_redirect_uri: "http://localhost:3000/Login",
+    loadUserInfo: true
+};
+Oidc.Log.logger = console;
+const userManager = new Oidc.UserManager(config);
 
-const access_token = 'access_token';
-const getOidcUserManager = () => {
-    const config = {
-        authority: "http://localhost:51000",
-        client_id: "reactClient",
-        redirect_uri: "http://localhost:3000/login-return",
-        response_type: "id_token token",
-        scope: "openid profile clinicApi",
-        post_logout_redirect_uri: "http://localhost:3000/patient",
-    };
-    return new UserManager(config);
-}
-const authenticate = () => {
-    getOidcUserManager().signinRedirect();
+const authenticate = (data) => {
+    userManager
+        .signinRedirect(data)
+        .catch(error => console.log('signinRedirect error: ', error));    
 };
-const isAuthenticated = () =>{
-    return localStorage.getItem(access_token) 
-        ? true
-        : false;
+function signinRedirectCallback() {
+    return userManager
+        .signinRedirectCallback()
+        .then(user => {
+            return user.state;
+        })
+        .catch(error => console.error('signinRedirectCallback error: ', error));
 };
-const saveAccessToken = (accessToken) => {
-    localStorage.setItem(access_token, accessToken);
+const isAuthenticate = () => {
+        const storedUser = getStoredUser();
+        if(storedUser) {
+            const user = new User(JSON.parse(storedUser));
+            return !user.expired;
+        }
+        return false;
+};
+const getStoredUser = () => {
+    return sessionStorage.getItem(`oidc.${userManager._userStoreKey}`);
 };
 const getAccessToken = () => {
-    return localStorage.getItem(access_token);
+    const storedUser = getStoredUser();
+    if(storedUser) {
+        const user = new User(JSON.parse(storedUser));
+        return user.access_token;
+    }
+    return undefined;
 };
 const logout = () => {
-    localStorage.removeItem(access_token);
-    localStorage.clear();
-    getOidcUserManager().signoutRedirect();
+    userManager.signoutRedirect();
     console.log('Logout');
 };
+
 export default {
-    authenticate, 
+    userManager,
+    authenticate,
+    signinRedirectCallback, 
     logout, 
-    isAuthenticated, 
-    getAccessToken, 
-    saveAccessToken
+    isAuthenticate, 
+    getAccessToken
 };

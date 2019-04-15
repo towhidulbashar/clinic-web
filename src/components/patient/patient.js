@@ -9,7 +9,6 @@ import "./patient.css";
 import patientService from "./patientService";
 import { ValidationError } from '../common/ValidationError';
 
-
 class Patient extends Component {
     constructor(props) {
         super(props);

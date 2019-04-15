@@ -13,7 +13,7 @@ export class AppTopbar extends Component {
     render() {
         return (
             <div className="layout-topbar clearfix">
-                <a className="layout-menu-button" onClick={this.props.onToggleMenu}>
+                <a className="layout-menu-button" onClick={this.props.onToggleMenu} >
                     <span className="pi pi-bars"/>
                 </a>
                 <div className="layout-topbar-icons">

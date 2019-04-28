@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import {Sidebar} from 'primereact/sidebar';
+import {InputText} from 'primereact/inputtext';
 import authentication from '../../services/common/authentication';
+import { Button } from 'primereact/button';
 
 class Login extends Component {
+    constructor() {
+        super();
+        this.state = {visible: false};
+    }
     login = () =>{
         let { from } = this.props.location.state || { from: { pathname: '/' } };
         authentication.authenticate({data: from.pathname});
@@ -12,17 +19,10 @@ class Login extends Component {
     test = () => {
     };
     componentDidMount(){
-        
+        this.login();
     }
     render(){
-        return(
-            <div>
-                <p>You must log in to view the page</p>
-                <button onClick={this.test}>Test</button>
-                <button onClick={this.login}>Log in</button>
-                <button onClick={this.logout}>Log out</button>
-            </div>
-        );
+        return <React.Fragment />;
     }
 }
 export default Login;

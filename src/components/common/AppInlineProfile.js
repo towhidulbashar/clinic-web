@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import authentication from '../../services/common/authentication';
 
 export class AppInlineProfile extends Component {
     constructor() {
@@ -12,7 +13,10 @@ export class AppInlineProfile extends Component {
     onClick = (event) => {
         this.setState({expanded: !this.state.expanded});
         event.preventDefault();
-    }
+    };
+    logOut = () => {
+        authentication.logout();
+    };
 
     render() {
         return  (
@@ -27,7 +31,7 @@ export class AppInlineProfile extends Component {
                 <ul className={classNames({'profile-expanded': this.state.expanded})}>
                     <li><a><i className="pi pi-fw pi-user"/><span>Account</span></a></li>
                     <li><a><i className="pi pi-fw pi-inbox"/><span>Notifications</span><span className="menuitem-badge">2</span></a></li>
-                    <li><a><i className="pi pi-fw pi-power-off"/><span>Logout</span></a></li>
+                    <li><a onClick={this.logOut}><i className="pi pi-fw pi-power-off"/><span>Logout</span></a></li>
                 </ul>
             </div>
         );
